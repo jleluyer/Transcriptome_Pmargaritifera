@@ -1,0 +1,11 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -V
+#$ -cwd
+#$ -M pauline.auffret@ifremer.fr
+#$ -m bea
+#$ -q short.q
+#$ -pe thread 16
+#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/remapping
+#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/remapping
+
