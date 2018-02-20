@@ -1,0 +1,31 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -V
+#$ -cwd
+#$ -M pauline.auffret@ifremer.fr
+#$ -m bea
+#$ -q short.q
+#$ -pe thread 8
+#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/fastqc_raw_reads
+#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/fastqc_raw_reads
+
+#Global variables
+WORKING_DIRECTORY=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/rawdata
+
+#FastQC variables
+FASTQC_EXEC=/usr/local/genome2/FastQC-v0.11.5/fastqc
+
+#Getting fastq files names
+FILE_R1=$(ls *_R1.fastq.gz)
+FILE_R2=$(ls *_R2.fastq.gz)
+
+#Running Fastqc on trimmed reads
+echo "Running FastQC  on ${FILE_R1%_R1*} file..."
+
+mkdir -p $WORKING_DIRECTORY/fastqc_raw_reads
+time $FASTQC_EXEC $FILE_R1 -o $WORKING_DIRECTORY/fastqc_raw_reads
+time $FASTQC_EXEC $FILE_R2 -o $WORKING_DIRECTORY/fastqc_raw_reads
+
+echo "Running FastQC  on ${FILE_R1%_R1*} done."
+
+

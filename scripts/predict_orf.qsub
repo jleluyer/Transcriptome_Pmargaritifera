@@ -1,0 +1,29 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -V
+#$ -cwd
+#$ -M pauline.auffret@ifremer.fr
+#$ -m bea
+#$ -q short.q
+#$ -pe thread 1
+#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/predict_orf
+#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/predict_orf
+
+#Global variables
+RESULTS_DIR=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/cluster_cdhit-est
+ASSEMBLY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/assembly_trinity_norm_10samples_011017/Trinity.fasta
+LOG_DIR=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/predict_orf
+TRANSDECODER_LONGORF=/usr/local/genome2/TransDecoder-3.0.1/TransDecoder.LongOrfs
+TRANSDECODER_PREDICT=/usr/local/genome2/TransDecoder-3.0.1/TransDecoder.Predict
+MINPROT=100
+TAG="${ASSEMBLY##*/}_brut_011017.predict_orf_m${MINPROT}"
+WORKING_DIRECTORY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/predict_orf/${TAG}
+
+mkdir -p $WORKING_DIRECTORY
+
+cd $WORKING_DIRECTORY
+
+time $TRANSDECODER_LONGORF -t $ASSEMBLY -m $MINPROT 
+  
+
+

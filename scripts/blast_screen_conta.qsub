@@ -1,0 +1,24 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -V
+#$ -cwd
+#$ -M pauline.auffret@ifremer.fr
+#$ -m bea
+#$ -q short.q
+#$ -pe thread 16
+#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/annotate_assembly
+#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/annotate_assembly
+
+ASSEMBLY=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/finalresult/longest_orfs.cds_corresponding_transcripts_matrix.TPM.not_cross_norm_per_sample_filter_low_expr_0.5_highest_iso_only/pinctada_transcriptome_41140.fa
+SUBJECT=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/input/primers_illumina.fa
+TAG="blastn_q_${SUBJECT##*/}_s_${ASSEMBLY##*/}_mts1"
+WORKING_DIRECTORY=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/finalresult/${TAG}
+
+formatdb -i $ASSEMBLY -p F
+
+mkdir -p ${WORKING_DIRECTORY}
+
+cd ${WORKING_DIRECTORY}
+
+cat ${SUBJECT} | parallel -j 16 -k --block 10k --recstart '>' --pipe blastn -subject ${ASSEMBLY} -query - -outfmt \"6 qseqid qlen sseqid slen qcovs pident length mismatch gapopen qstart qend sstar send evalue bitscore\"  -evalue 1e-5 -max_target_seqs 1 > ${WORKING_DIRECTORY}/${TAG}.nt.txt
+
