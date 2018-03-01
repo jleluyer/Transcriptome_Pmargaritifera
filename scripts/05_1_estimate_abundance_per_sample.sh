@@ -1,27 +1,18 @@
 #!/bin/bash
-#$ -S /bin/bash
-#$ -V
-#$ -cwd
-#$ -M pauline.auffret@ifremer.fr
-#$ -m bea
-#$ -q long.q@@bignode
-#$ -pe thread 8
-#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/estimate_abundance_per_sample
-#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/estimate_abundance_per_sample
 
+#PBS parameters...
 
 #Global variables
-TRINITY_RESULTS_DIR=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/assembly_trinity_norm_10samples_011017
-ASSEMBLY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/predict_orf/Trinity.fasta_brut_011017.predict_orf_m100/Trinity.fasta.transdecoder_dir/Trinity.fasta_brut_011017.predict_orf_m100_corresponding_transcripts
+ASSEMBLY=		#path to transcriptome assembly fasta file
 TAG="${ASSEMBLY##*/}_estimate_abundance_per_sample"
-WORKING_DIRECTORY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/${TAG}
-DATA_DIR=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/trimming_trimmomatic_011017/paired
-SCRIPT=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/script
-HEADER=${SCRIPT}/header.txt
+WORKING_DIRECTORY=	#path to working/output directory
+DATA_DIR=		#path to trimmed fastq files directory
+SCRIPT=			#path to script directory
+HEADER=			#path to header.txt file
 
 #Trinity variables
-TRINITY_EXEC=/usr/local/genome2/trinityrnaseq-2.4.0/Trinity 
-TRINITY_UTIL_DIR=/usr/local/genome2/trinityrnaseq-2.4.0/util
+TRINITY_EXEC=		#path to Trinity exec (.../trinityrnaseq-2.4.0/Trinity)
+TRINITY_UTIL_DIR=	#path to Trinity util (../trinityrnaseq-2.4.0/util)
 VERSION="2.4.0"
 SEQ_TYPE="fq"	#fastq input files
 LEFT_1="${DATA_DIR}/HI.4112.001.D707---D506.X4/HI.4112.001.D707---D506.X4_R1_paired.fastq.gz"
@@ -51,14 +42,14 @@ EST_METHOD="RSEM"
 ALN_METHOD="bowtie2"
 bowtie2_RSEM="\"--no-mixed --no-discordant --end-to-end --gbar 1000 -k 200 \" "
 
-#Sourcing java 1.8
-source /usr/local/genome2/envs/java-1.8-activate
+#Sourcing java 1.8 if needed
+source #java path
 
-mkdir -p $WORKING_DIRECTORY
+mkdir -p $WORKING_DIRECTORY/$TAG
 
-cd $WORKING_DIRECTORY
+cd $WORKING_DIRECTORY/$TAG
 
-#Run trinity align_and_estimate_abundance.pl script on fastq file
+#Run trinity align_and_estimate_abundance.pl script on fastq files
 for i in {1..10}
 do
 	R1=LEFT_$i ;
