@@ -28,7 +28,7 @@ qsub 07_cluster_sequences_cdhit.qsub
 #8/ Remapping samples
 bash 08_remap_assembly_trinity_PE_norm_10samples.sh
 
-#9/ Filterinf bam files
+#9/ Filtering bam files
 bash 09_filterbam.sh
 
 #10/ Screening for contamination
