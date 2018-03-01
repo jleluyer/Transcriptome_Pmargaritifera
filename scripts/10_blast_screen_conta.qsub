@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#PBS parameters...
+
+#Global variables
+ASSEMBLY=			#path to transcriptome
+SUBJECT=			#path to file primers_illumina.fa
+TAG="blastn_q_${SUBJECT##*/}_s_${ASSEMBLY##*/}_mts1"
+WORKING_DIRECTORY=		#path to working/output directory
+BLASTN="blastn"			#path to blastn
+FORMATDB="formatdb"		#path to formatdb
+PARALLEL="parallel"		#path to parallel
+
+#Blastn parameters
+EVAL="1e-5"			#e-value
+MAX_TS="1"			#max target sequences
+NB_CPU="16"			#nb cpu
+OUTFMT="\"6 qseqid qlen sseqid slen qcovs pident length mismatch gapopen qstart qend sstar send evalue bitscore\""	#output format
+
+#create blast db
+${FORMATDB} -i $ASSEMBLY -p F
+
+#create working directory if not existing
+mkdir -p ${WORKING_DIRECTORY}
+
+#go to working directory
+cd ${WORKING_DIRECTORY}
+
+#Run blast
+cat ${SUBJECT} | ${PARALLEL} -j ${NB_CPU} -k --block 10k --recstart '>' --pipe ${BLASTN} -subject ${ASSEMBLY} -query - -outfmt ${OUTFMT}  -evalue ${EVAL} -max_target_seqs ${MAX_TS} > ${WORKING_DIRECTORY}/${TAG}.nt.txt
+

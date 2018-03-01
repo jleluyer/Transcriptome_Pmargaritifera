@@ -1,0 +1,19 @@
+#!/bin/bash
+
+#PBS parameters...
+
+#Global variables
+ASSEMBLY=		#path to transcriptome assembly
+TRANSDECODER_LONGORF=	#path to transdecoder (.../TransDecoder-3.0.1/TransDecoder.LongOrfs)
+MINPROT=100
+TAG="${ASSEMBLY##*/}.predict_orf_m${MINPROT}"
+WORKING_DIRECTORY=	#path to working/output directory
+
+mkdir -p $WORKING_DIRECTORY/$TAG
+
+cd $WORKING_DIRECTORY/$TAG
+
+time $TRANSDECODER_LONGORF -t $ASSEMBLY -m $MINPROT 
+  
+
+

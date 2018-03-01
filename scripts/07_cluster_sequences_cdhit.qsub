@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#PBS parameters...
+
+#Global variables
+WORKING_DIRECTORY=		#path to working directory
+ASSEMBLY=			#path to transcriptome assembly
+TRINITY_UTIL_DIR=		#path to trinity util directory (.../trinityrnaseq-2.4.0/util)
+LOG_DIR=			#path to log directory
+CDHIT=				#path to cd-hit-est (.../cd-hit/cd-hit-est)
+
+#CD-HIT parameters
+CLUSTER_THRESHOLD="0.9"
+NBCPU="16"
+
+#Create Tag variable
+TAG="${ASSEMBLY##*/}.cluster${CLUSTER_THRESHOLD}_cdhit-est"
+
+#create working directory if not existing
+mkdir -p ${WORKING_DIRECTORY}/${TAG}
+
+cd ${WORKING_DIRECTORY}/${TAG}
+
+#Run cd-hit
+time $CDHIT -i $ASSEMBLY -c $CLUSTER_THRESHOLD -o ${WORKING_DIRECTORY}/${TAG}/${TAG} -T $NBCPU 
+
+#run trinityStats on resulting transcriptome
+time ${TRINITY_UTIL_DIR}/TrinityStats.pl ${WORKING_DIRECTORY}/${TAG}/${TAG} > ${WORKING_DIRECTORY}/${TAG}_stats.txt 
+
+

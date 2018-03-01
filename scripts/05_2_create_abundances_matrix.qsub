@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#PBS parameters...
+
+#Global variables
+ASSEMBLY=		#path to transcriptome assembly
+TAG="${ASSEMBLY##*/}_create_abundance_matrix_per_sample"
+WORKING_DIRECTORY=	#path to working/output directory
+DATA_DIR=		#path to abundance estimate files directory (isoforms.results files)
+sample1=${DATA_DIR}/HI.4112.001.D707---D506.X4.isoforms.results
+sample2=${DATA_DIR}/HI.4112.001.D707---D507.X6.isoforms.results
+sample3=${DATA_DIR}/HI.4112.001.D708---D504.X13.isoforms.results
+sample4=${DATA_DIR}/HI.4112.002.D710---D502.X19.isoforms.results
+sample5=${DATA_DIR}/HI.4112.002.D710---D503.X21.isoforms.results
+sample6=${DATA_DIR}/HI.4112.002.D711---D501.X30.isoforms.results
+sample7=${DATA_DIR}/HI.4254.008.Index_15.TB2.isoforms.results
+sample8=${DATA_DIR}/HI.4254.008.Index_7.TB9.isoforms.results
+sample9=${DATA_DIR}/SRR1039667_sample123.isoforms.results
+sample10=${DATA_DIR}/SRR1041217_sample144.isoforms.results
+
+#Trinity variables 
+TRINITY_UTIL_DIR=	#path to trinity util directory (.../trinityrnaseq-2.4.0/util)
+VERSION="2.4.0"
+EST_METHOD="RSEM"
+
+#Create working directory if not existing
+mkdir -p ${WORKING_DIRECTORY}
+
+cd ${WORKING_DIRECTORY}
+
+#Run trinity abundance_estimates_to_matrix.pl script
+time ${TRINITY_UTIL_DIR}/abundance_estimates_to_matrix.pl --est_method $EST_METHOD \
+$sample1 $sample2 $sample3 $sample4 $sample5 $sample6 $sample7 $sample8 $sample9 $sample10
+

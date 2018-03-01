@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#PBS parameters
+
+#Global variables
+WORKING_DIRECTORY=	#path to raw data directory
+
+#FastQC variables
+FASTQC_EXEC=		#path to fastqc exec
+
+#Getting fastq files names
+FILE_R1=$(ls *_R1.fastq.gz)
+FILE_R2=$(ls *_R2.fastq.gz)
+
+#creates working directory if not existing
+mkdir -p $WORKING_DIRECTORY/fastqc_raw_reads
+
+#Running Fastqc
+echo "Running FastQC  on ${FILE_R1%_R1*}..."
+
+time $FASTQC_EXEC $FILE_R1 -o $WORKING_DIRECTORY/fastqc_raw_reads
+time $FASTQC_EXEC $FILE_R2 -o $WORKING_DIRECTORY/fastqc_raw_reads
+
+echo "Running FastQC  on ${FILE_R1%_R1*} done."
+
+

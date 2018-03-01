@@ -1,0 +1,45 @@
+#!/bin/bash
+
+#PBS parameters
+
+#Global variables
+WORKING_DIRECTORY=	#path to working/output directory
+
+#Trimmomatic variables
+NCPU=8
+TRIMMOMATIC_JAR=	#path to trimmomatic jar file (trimmomatic-0.36.jar)
+ADAPTERS=		#path to adapters file (TruSeq3-PE.fa)
+
+#FastQC variables
+FASTQC_EXEC=		#path to fastqc exec
+
+#Getting fastq files names
+FILE_R1=$(ls *_R1.fastq.gz)
+FILE_R2=$(ls *_R2.fastq.gz)
+
+#Running Trimmomatic
+echo "Running Trimmomatic on ${FILE_R1%_R1*} file..."
+time java -Xmx40G -jar $TRIMMOMATIC_JAR PE \
+	-threads $NCPU \
+	-phred33 \
+        $FILE_R1 \
+        $FILE_R2 \
+        $WORKING_DIRECTORY/${FILE_R1%.fastq.gz*}_paired.fastq.gz \
+        $WORKING_DIRECTORY/${FILE_R1%.fastq.gz*}_single.fastq.gz \
+        $WORKING_DIRECTORY/${FILE_R2%.fastq.gz*}_paired.fastq.gz \
+        $WORKING_DIRECTORY/${FILE_R2%.fastq.gz*}_single.fastq.gz \
+        ILLUMINACLIP:$ADAPTERS:2:20:7 \
+        LEADING:26 \
+        TRAILING:26 \
+        SLIDINGWINDOW:30:30 \
+	MINLEN:40
+echo "Running Trimmomatic on ${FILE_R1%%_R1*} file done."
+
+
+#Running Fastqc on trimmed reads
+echo "Running FastQC  on ${FILE_R1%_R1*} file..."
+mkdir -p $WORKING_DIRECTORY/fastqc_trimmed_reads
+time $FASTQC_EXEC $WORKING_DIRECTORY/${FILE_R1%_R1*}*_paired.fastq.gz -o $WORKING_DIRECTORY/fastqc_trimmed_reads/
+echo "Running FastQC  on ${FILE_R1%_R1*} done."
+
+

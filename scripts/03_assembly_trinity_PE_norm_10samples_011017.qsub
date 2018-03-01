@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#PBS parameters...
+
+#Global variables
+WORKING_DIRECTORY=		#path to working/output directory
+DATA_DIR=			#path to directory containing trimmed fastq files
+
+#Trinity variables
+TRINITY_EXEC= 			#path to Trinity executable (.../trinityrnaseq-2.4.0/Trinity)
+TRINITY_PLUGINS=		#path to Trinity plugins (.../trinityrnaseq-2.4.0/trinity-plugins)
+VERSION="2.4.0"
+SEQ_TYPE="fq"	
+LEFT="${DATA_DIR}/HI.4112.001.D707---D506.X4/HI.4112.001.D707---D506.X4_R1_paired.fastq.gz,${DATA_DIR}/HI.4112.001.D707---D507.X6/HI.4112.001.D707---D507.X6_R1_paired.fastq.gz,${DATA_DIR}/HI.4112.001.D708---D504.X13/HI.4112.001.D708---D504.X13_R1_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D710---D502.X19/HI.4112.002.D710---D502.X19_R1_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D710---D503.X21/HI.4112.002.D710---D503.X21_R1_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D711---D501.X30/HI.4112.002.D711---D501.X30_R1_paired.fastq.gz,${DATA_DIR}/HI.4254.008.Index_15.TB2/HI.4254.008.Index_15.TB2_R1_paired.fastq.gz,${DATA_DIR}/HI.4254.008.Index_7.TB9/HI.4254.008.Index_7.TB9_R1_paired.fastq.gz,${DATA_DIR}/SRR1039667_sample123/SRR1039667_sample123_R1_paired_readIDModif.fastq.gz,${DATA_DIR}/SRR1041217_sample144/SRR1041217_sample144_R1_paired_readIDModif.fastq.gz"
+RIGHT="${DATA_DIR}/HI.4112.001.D707---D506.X4/HI.4112.001.D707---D506.X4_R2_paired.fastq.gz,${DATA_DIR}/HI.4112.001.D707---D507.X6/HI.4112.001.D707---D507.X6_R2_paired.fastq.gz,${DATA_DIR}/HI.4112.001.D708---D504.X13/HI.4112.001.D708---D504.X13_R2_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D710---D502.X19/HI.4112.002.D710---D502.X19_R2_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D710---D503.X21/HI.4112.002.D710---D503.X21_R2_paired.fastq.gz,${DATA_DIR}/HI.4112.002.D711---D501.X30/HI.4112.002.D711---D501.X30_R2_paired.fastq.gz,${DATA_DIR}/HI.4254.008.Index_15.TB2/HI.4254.008.Index_15.TB2_R2_paired.fastq.gz,${DATA_DIR}/HI.4254.008.Index_7.TB9/HI.4254.008.Index_7.TB9_R2_paired.fastq.gz,${DATA_DIR}/SRR1039667_sample123/SRR1039667_sample123_R2_paired_readIDModif.fastq.gz,${DATA_DIR}/SRR1041217_sample144/SRR1041217_sample144_R2_paired_readIDModif.fastq.gz" 
+NB_CPU=24
+MAX_MEM="100G"
+ADD_PARAMS=""			#Specify additionnal parameters for Trinity if needed
+
+#Creating working directory if not existing
+mkdir -p $WORKING_DIRECTORY
+
+#Sourcing java 1.8
+source 				#path to java
+
+#Running Trinity
+
+echo "Running Trinity version ${VERSION} on ${DATA_DIR} files..."
+
+time $TRINITY_EXEC --seqType $SEQ_TYPE --max_memory $MAX_MEM --left $LEFT --right $RIGHT  --CPU $NB_CPU $ADD_PARAMS --output $WORKING_DIRECTORY --verbose  
+
+echo "Running Trinity version ${VERSION} on ${DATA_DIR} files done."
+
+#If run failed execute the failed commands (trinity log)
+#bash ${WORKING_DIRECTORY}/FailedCommands 
+
+#failed command 13.07.17
+#${TRINITY_PLUGINS}/parafly/bin/ParaFly -c ${WORKING_DIRECTORY}/recursive_trinity.cmds -CPU 16 -v
+
+
