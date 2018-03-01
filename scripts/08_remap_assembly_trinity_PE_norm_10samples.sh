@@ -1,20 +1,18 @@
 #!/bin/bash
 
-
 #Global variables
-ASSEMBLY=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/finalresult/Trinity.transcriptome.300118.fa
-WORKING_DIRECTORY=/scratch/externe/ifremer/pauffret
+ASSEMBLY=		#path to transcriptome assembly
+WORKING_DIRECTORY=	#path to working/output directory
 
-#DATA_DIR=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/trimming_trimmomatic/paired_fastq_files
-DATA_DIR=/projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/input/trimming_trimmomatic/paired_fastq_files
-SCRIPT=${PROJET}/pinctada_transcriptome_assembly/script/final_pipeline
-HEADER=${SCRIPT}/header.txt
-BWA=/usr/local/genome2/bwa/bwa
-INDEX=0
+DATA_DIR=		#path to trimmed fastq files directory
+SCRIPT=			#path to scripts directory
+HEADER=			#path to header.txt file
+BWA=			#path to bwa (.../bwa/bwa)
+INDEX=0			#boolean : if 1 index already built, Else 0
 
 #Trinity variables
-TRINITY_EXEC=/usr/local/genome2/trinityrnaseq-2.4.0/Trinity 
-TRINITY_UTIL_DIR=/usr/local/genome2/trinityrnaseq-2.4.0/util
+TRINITY_EXEC=		#path to trinity exec (.../trinityrnaseq-2.4.0/Trinity)
+TRINITY_UTIL_DIR=	#patht to trinity utill (.../trinityrnaseq-2.4.0/util)
 VERSION="2.4.0"
 SEQ_TYPE="fq"	#fastq input files
 LEFT_1="${DATA_DIR}/HI.4112.001.D707---D506.X4/HI.4112.001.D707---D506.X4_R1_paired.fastq.gz"
@@ -45,9 +43,9 @@ ALN_METHOD="bowtie2"
 TAG="remap_assembly_trinity_PE_norm_10samples_BWA_${ASSEMBLY##*/}"
 
 #Sourcing java 1.8
-source /usr/local/genome2/envs/java-1.8-activate
+source #path to java if needed or conda environment
 
-
+#create bwa index if not existing
 if [[ $INDEX == 0 ]]
 then
 	cp ${HEADER} ${SCRIPT}/create_bwa_index_${ASSEMBLY##*/}.qsub ;

@@ -1,0 +1,10 @@
+#!/bin/bash
+#$ -S /bin/bash
+#$ -V
+#$ -cwd
+#$ -M foo@bar.fr
+#$ -m bea
+#$ -q short.q
+#$ -pe thread 16
+#$ -e /some/where/over/the/rainbow
+#$ -o /some/where/over/the/rainbow

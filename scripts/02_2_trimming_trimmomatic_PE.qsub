@@ -1,24 +1,17 @@
 #!/bin/bash
-#$ -S /bin/bash
-#$ -V
-#$ -cwd
-#$ -M pauline.auffret@ifremer.fr
-#$ -m bea
-#$ -q short.q
-#$ -pe thread 8
-#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/trimming_trimmomatic
-#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/trimming_trimmomatic
+
+#PBS parameters
 
 #Global variables
-WORKING_DIRECTORY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results
+WORKING_DIRECTORY=	#path to working/output directory
 
 #Trimmomatic variables
 NCPU=8
-TRIMMOMATIC_JAR=/usr/local/genome2/Trimmomatic-0.36/trimmomatic-0.36.jar
-ADAPTERS=/usr/local/genome2/Trimmomatic-0.36/adapters/TruSeq3-PE.fa
+TRIMMOMATIC_JAR=	#path to trimmomatic jar file (trimmomatic-0.36.jar)
+ADAPTERS=		#path to adapters file (TruSeq3-PE.fa)
 
 #FastQC variables
-FASTQC_EXEC=/usr/local/genome2/FastQC-v0.11.5/fastqc
+FASTQC_EXEC=		#path to fastqc exec
 
 #Getting fastq files names
 FILE_R1=$(ls *_R1.fastq.gz)

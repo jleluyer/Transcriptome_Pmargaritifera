@@ -1,20 +1,12 @@
 #!/bin/bash
-#$ -S /bin/bash
-#$ -V
-#$ -cwd
-#$ -M pauline.auffret@ifremer.fr
-#$ -m bea
-#$ -q short.q
-#$ -pe thread 4
-#$ -e /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/create_abundance_matrix
-#$ -o /projet/externe/ifremer/pauffret/pinctada_transcriptome_assembly/archives/log/create_abundance_matrix
 
+#PBS parameters...
 
 #Global variables
-ASSEMBLY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/predict_orf/Trinity.fasta_brut_011017.predict_orf_m100/Trinity.fasta.transdecoder_dir/Trinity.fasta_brut_011017.predict_orf_m100_corresponding_transcripts
+ASSEMBLY=		#path to transcriptome assembly
 TAG="${ASSEMBLY##*/}_create_abundance_matrix_per_sample"
-WORKING_DIRECTORY=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/${TAG}
-DATA_DIR=/scratch/externe/ifremer/pauffret/pinctada_transcriptome_assembly/results/Trinity.fasta_brut_011017.predict_orf_m100_corresponding_transcripts_estimate_abundance_per_sample
+WORKING_DIRECTORY=	#path to working/output directory
+DATA_DIR=		#path to abundance estimate files directory (isoforms.results files)
 sample1=${DATA_DIR}/HI.4112.001.D707---D506.X4.isoforms.results
 sample2=${DATA_DIR}/HI.4112.001.D707---D507.X6.isoforms.results
 sample3=${DATA_DIR}/HI.4112.001.D708---D504.X13.isoforms.results
@@ -27,14 +19,16 @@ sample9=${DATA_DIR}/SRR1039667_sample123.isoforms.results
 sample10=${DATA_DIR}/SRR1041217_sample144.isoforms.results
 
 #Trinity variables 
-TRINITY_UTIL_DIR=/usr/local/genome2/trinityrnaseq-2.4.0/util
+TRINITY_UTIL_DIR=	#path to trinity util directory (.../trinityrnaseq-2.4.0/util)
 VERSION="2.4.0"
 EST_METHOD="RSEM"
 
+#Create working directory if not existing
 mkdir -p ${WORKING_DIRECTORY}
 
 cd ${WORKING_DIRECTORY}
 
+#Run trinity abundance_estimates_to_matrix.pl script
 time ${TRINITY_UTIL_DIR}/abundance_estimates_to_matrix.pl --est_method $EST_METHOD \
 $sample1 $sample2 $sample3 $sample4 $sample5 $sample6 $sample7 $sample8 $sample9 $sample10
 

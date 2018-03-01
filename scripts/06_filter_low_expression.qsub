@@ -1,0 +1,26 @@
+#!/bin/bash
+
+#PBS variables...
+
+#Global variables
+WORKING_DIRECTORY=	#path to working directory
+ASSEMBLY=		#path to transcriptome assembly
+LOG_DIR=		#path to log directory
+MATRIX=			#path to abundance matrix (matrix.TPM.not_cross_norm file)
+
+#Trinity variables
+TRINITY_UTIL_DIR=	#path to trinity util directory (.../trinityrnaseq-2.4.0/util)
+MIN_EXPR=0.5
+
+TAG="${ASSEMBLY##*/}_${MATRIX##*/}_per_sample_filter_low_expr_${MIN_EXPR}_highest_iso_only"
+OUTPUT=${WORKING_DIRECTORY}/${TAG}/${TAG}_filter_low_expression_transcripts
+
+mkdir -p $WORKING_DIRECTORY/${TAG}
+
+cd $WORKING_DIRECTORY/${TAG}
+
+time ${TRINITY_UTIL_DIR}/filter_low_expr_transcripts.pl --transcripts $ASSEMBLY --matrix $MATRIX --highest_iso_only --min_expr_any $MIN_EXPR --trinity_mode > $OUTPUT
+
+time ${TRINITY_UTIL_DIR}/TrinityStats.pl ${OUTPUT} > ${WORKING_DIRECTORY}/${TAG}/${TAG}_stats.txt
+
+
