@@ -2,7 +2,7 @@ import sys
 
 #Given one transcriptome fasta file and a list of transcripts ID, get the sequences of these transcripts
 
-fileIN=open(sys.argv[1], "rU") 	#transcriptome fasta file
+fileIN=open(sys.argv[1], "rU") 	#transcriptome fasta file resulting from step 03
 fileID=open(sys.argv[2], "rU")	#IDs list to get fasta sequence one ID per line
 fileOUT=open(sys.argv[3], "w")	#out file
 
