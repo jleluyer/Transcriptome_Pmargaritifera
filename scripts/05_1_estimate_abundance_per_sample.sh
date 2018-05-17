@@ -3,7 +3,7 @@
 #PBS parameters...
 
 #Global variables
-ASSEMBLY=		#path to transcriptome assembly fasta file
+ASSEMBLY=		#path to transcriptome assembly fasta file resulting from step 04_2
 TAG="${ASSEMBLY##*/}_estimate_abundance_per_sample"
 WORKING_DIRECTORY=	#path to working/output directory
 DATA_DIR=		#path to trimmed fastq files directory

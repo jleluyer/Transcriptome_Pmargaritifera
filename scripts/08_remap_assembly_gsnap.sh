@@ -2,8 +2,8 @@
 
 
 #Global variables
-ASSEMBLY_DIR=					#path to transcriptome directory
-ASSEMBLY=					#path to transcriptome assembly
+ASSEMBLY_DIR=					#path to transcriptome directory containing transcriptome assembly resulting from step 06
+ASSEMBLY=					#path to transcriptome assembly resulting from step 06
 WORKING_DIRECTORY=				#path to working/output directory
 DATA_DIR=					#path to trimmed fastq files directory
 SCRIPT=						#path to script directory

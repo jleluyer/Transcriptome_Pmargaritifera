@@ -3,7 +3,7 @@
 #PBS parameters...
 
 #Global variables
-ASSEMBLY=		#path to transcriptome assembly
+ASSEMBLY=		#path to transcriptome assembly resulting from step 03
 TRANSDECODER_LONGORF=	#path to transdecoder (.../TransDecoder-3.0.1/TransDecoder.LongOrfs)
 MINPROT=100
 TAG="${ASSEMBLY##*/}.predict_orf_m${MINPROT}"
