@@ -4,9 +4,9 @@
 
 #Global variables
 WORKING_DIRECTORY=	#path to working directory
-ASSEMBLY=		#path to transcriptome assembly
+ASSEMBLY=		#path to transcriptome assembly resulting from step 04_2
 LOG_DIR=		#path to log directory
-MATRIX=			#path to abundance matrix (matrix.TPM.not_cross_norm file)
+MATRIX=			#path to abundance matrix (matrix.TPM.not_cross_norm file) resulting from step 05_2
 
 #Trinity variables
 TRINITY_UTIL_DIR=	#path to trinity util directory (.../trinityrnaseq-2.4.0/util)

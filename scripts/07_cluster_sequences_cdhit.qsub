@@ -4,7 +4,7 @@
 
 #Global variables
 WORKING_DIRECTORY=		#path to working directory
-ASSEMBLY=			#path to transcriptome assembly
+ASSEMBLY=			#path to transcriptome assembly resulting from step 06
 TRINITY_UTIL_DIR=		#path to trinity util directory (.../trinityrnaseq-2.4.0/util)
 LOG_DIR=			#path to log directory
 CDHIT=				#path to cd-hit-est (.../cd-hit/cd-hit-est)

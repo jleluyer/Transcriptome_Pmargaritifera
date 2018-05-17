@@ -3,7 +3,7 @@
 #PBS parameters...
 
 #Global variables
-ASSEMBLY=			#path to transcriptome
+ASSEMBLY=			#path to transcriptome resulting from step 06
 SUBJECT=			#path to file primers_illumina.fa
 TAG="blastn_q_${SUBJECT##*/}_s_${ASSEMBLY##*/}_mts1"
 WORKING_DIRECTORY=		#path to working/output directory

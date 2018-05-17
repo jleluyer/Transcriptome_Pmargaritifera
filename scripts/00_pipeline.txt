@@ -5,14 +5,14 @@ bash 01_1_fastqc_raw_reads.sh ---> qsub 01_2_fastqc_raw_reads.qsub *
 bash 02_1_trimming_trimmomatic_PE.sh ---> qsub 02_2_trimming_trimmomatic_PE.qsub *
 
 #3/ Transcriptome assembly
-qsub 03_assembly_trinity_PE_norm_10samples_011017.qsub
+qsub 03_assembly_trinity_PE_norm.qsub
 
 #4/ ORF prediction
 qsub 04_1_predict_orf.qsub
 
 grep ">" longest_orfs.cds | cut -f3 -d ":" > longest_orfs.cds_transcripts_names
 
-python 04_2_getFasta.py Trinity.fasta longest_orfs.cds_transcripts_names Trinity.fasta_brut_011017.predict_orf_m100_corresponding_transcripts
+python 04_2_getFasta.py Trinity.fasta longest_orfs.cds_transcripts_names Trinity.fasta_predict_orf_m100_corresponding_transcripts
 
 #5/ Abundance estimation
 bash 05_1_estimate_abundance_per_sample.sh
@@ -26,13 +26,10 @@ qsub 06_filter_low_expression.qsub
 qsub 07_cluster_sequences_cdhit.qsub 
 
 #8/ Remapping samples
-bash 08_remap_assembly_trinity_PE_norm_10samples.sh
+bash 08_remap_assembly_gsnap.sh
 
-#9/ Filtering bam files
-bash 09_filterbam.sh
-
-#10/ Screening for contamination
-qsub 10_blast_screen_conta.qsub
+#9/ Screening for contamination
+qsub 9_blast_screen_conta.qsub
 
 
 * 1 ---> 2 indicates that running 1 will automatically run 2

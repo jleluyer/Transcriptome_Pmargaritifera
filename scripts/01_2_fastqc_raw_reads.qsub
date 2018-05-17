@@ -3,7 +3,7 @@
 #PBS parameters
 
 #Global variables
-WORKING_DIRECTORY=	#path to raw data directory
+WORKING_DIRECTORY=	#path to output directory
 
 #FastQC variables
 FASTQC_EXEC=		#path to fastqc exec

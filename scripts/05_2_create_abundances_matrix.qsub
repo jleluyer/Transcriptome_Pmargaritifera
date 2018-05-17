@@ -3,10 +3,10 @@
 #PBS parameters...
 
 #Global variables
-ASSEMBLY=		#path to transcriptome assembly
+ASSEMBLY=		#path to transcriptome assembly resulting from step 04_2
 TAG="${ASSEMBLY##*/}_create_abundance_matrix_per_sample"
 WORKING_DIRECTORY=	#path to working/output directory
-DATA_DIR=		#path to abundance estimate files directory (isoforms.results files)
+DATA_DIR=		#path to abundance estimate files directory (isoforms.results files) resulting from step 05_1
 sample1=${DATA_DIR}/HI.4112.001.D707---D506.X4.isoforms.results
 sample2=${DATA_DIR}/HI.4112.001.D707---D507.X6.isoforms.results
 sample3=${DATA_DIR}/HI.4112.001.D708---D504.X13.isoforms.results
